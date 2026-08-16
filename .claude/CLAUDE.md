@@ -6,9 +6,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **produce123.github.io** —— GitHub Pages 个人主页（介绍 / 展示自我）。纯静态站点（HTML + CSS + JS），零构建依赖，push 即上线。用户级 Pages 仓库自动从 `main` 分支托管，无需 CI。
 
-- 站点地址：`https://produce123.github.io`
+- 主站点地址：`https://home.prodhub.me`（自定义域名，见下）　|　兜底地址：`https://produce123.github.io`
 - 内容语言：中文为主
 - 设计风格：深色霓虹（配色集中在 `css/style.css` 的 `:root` 变量）
+
+## 自定义域名与 HTTPS
+
+- **域名**：`home.prodhub.me`（DNS 托管在 Cloudflare）
+- **DNS 配置**：`home` → CNAME → `produce123.github.io`，代理状态必须为**仅 DNS（灰云）**
+- **证书**：由 GitHub Pages 自动签发（Let's Encrypt，`CN=home.prodhub.me`）并自动续期，无需手动管理
+- **Enforce HTTPS**：已开启，`http://` 自动 301 → `https://`
+- ⚠️ **故障排查**：若站点打不开 / 提示证书警告，先查 Cloudflare 那条 CNAME 记录是否被误开了代理（橙云）——GitHub 无法为经 CDN 代理的域名签发证书
 
 ## 结构
 
