@@ -21,3 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // 页脚年份
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+// 头像 Lightbox：点击查看完整头像
+const avatarOpen = document.getElementById('avatar-open');
+const lightbox = document.getElementById('lightbox');
+if (avatarOpen && lightbox) {
+  const openLightbox = () => lightbox.classList.add('open');
+  const closeLightbox = () => lightbox.classList.remove('open');
+  avatarOpen.addEventListener('click', openLightbox);
+  lightbox.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+}

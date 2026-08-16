@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>produce123 · 个人主页</title>
   <meta name="description" content="produce123 的个人主页——独立开发者，用 Claude Code 打造效率工具与创意应用。">
-  <link rel="icon" href="assets/avatar.svg">
+  <link rel="icon" href="assets/avatar.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <!-- Hero -->
   <header class="hero">
     <div class="hero-inner reveal">
-      <img class="hero-avatar" src="assets/avatar.svg" alt="produce123 头像" width="120" height="120">
+      <img class="hero-avatar" id="avatar-open" src="assets/avatar.png" alt="produce123 头像" title="点击查看完整头像" width="120" height="120">
       <h1 class="hero-title">produce123<span class="cursor">_</span></h1>
       <p class="hero-subtitle">开发者 · 用 Claude Code 打造效率工具与创意应用</p>
       <nav class="hero-links">
@@ -65,6 +65,12 @@
   <footer class="footer">
     <p>© <span id="year"></span> produce123 · <a href="https://github.com/produce123" target="_blank" rel="noopener">GitHub</a></p>
   </footer>
+
+  <!-- 头像大图 Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="完整头像">
+    <img class="lightbox-img" src="assets/avatar.png" alt="produce123 完整头像">
+    <p class="lightbox-hint">点击任意处或按 ESC 关闭</p>
+  </div>
 
   <script src="js/main.js"></script>
 </body>

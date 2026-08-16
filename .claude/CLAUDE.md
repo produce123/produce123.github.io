@@ -24,7 +24,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 index.html          # 单页：Hero + 项目展示 + Footer
 css/style.css       # 样式（CSS 变量统一主题）
 js/main.js          # 滚动渐显 / 页脚年份
-assets/avatar.svg   # 头像（占位，可替换）
+assets/avatar.png   # 头像（1:1 方形，圆形裁剪展示，点击查看完整大图）
 README.md           # 站点说明
 ```
 

@@ -9,7 +9,7 @@
 ├── index.html          # 单页：Hero + 项目展示 + Footer
 ├── css/style.css       # 深色霓虹主题（CSS 变量统一管理配色）
 ├── js/main.js          # 滚动渐显 / 页脚年份
-├── assets/avatar.svg   # 头像占位（可替换为自己的头像）
+├── assets/avatar.png   # 头像（1:1 方形，圆形裁剪展示，点击查看完整大图）
 └── .claude/CLAUDE.md   # 项目专属开发约定
 ```
 

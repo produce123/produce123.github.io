@@ -60,6 +60,13 @@ code {
   border: 2px solid var(--accent);
   box-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
   margin-bottom: 24px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hero-avatar:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 34px rgba(34, 211, 238, 0.55);
 }
 
 .hero-title {
@@ -202,6 +209,45 @@ code {
   text-align: center;
   color: var(--text-dim);
   font-size: 0.9rem;
+}
+
+/* ---------- 头像 Lightbox（点击查看完整头像） ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(4, 7, 12, 0.82);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.lightbox.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.lightbox-img {
+  max-width: min(80vw, 560px);
+  max-height: 80vh;
+  border-radius: 12px;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 44px rgba(34, 211, 238, 0.4);
+  transform: scale(0.94);
+  transition: transform 0.25s ease;
+}
+.lightbox.open .lightbox-img { transform: scale(1); }
+
+.lightbox-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  color: var(--text-dim);
+  font-size: 0.85rem;
 }
 
 /* ---------- 滚动渐显 ---------- */
