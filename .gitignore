@@ -8,3 +8,6 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Claude Code 本机 hook 配置
+.claude/settings.local.json
