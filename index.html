@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>produce123 · 个人主页</title>
+  <meta name="description" content="produce123 的个人主页——独立开发者，用 Claude Code 打造效率工具与创意应用。">
+  <link rel="icon" href="assets/avatar.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner reveal">
+      <img class="hero-avatar" src="assets/avatar.svg" alt="produce123 头像" width="120" height="120">
+      <h1 class="hero-title">produce123<span class="cursor">_</span></h1>
+      <p class="hero-subtitle">开发者 · 用 Claude Code 打造效率工具与创意应用</p>
+      <nav class="hero-links">
+        <a class="btn" href="https://github.com/produce123" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
+          GitHub
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 项目展示 -->
+  <main class="projects">
+    <h2 class="section-title reveal">项目展示</h2>
+    <p class="section-hint reveal">我在 GitHub 上公开的作品</p>
+
+    <div class="cards">
+      <article class="card reveal">
+        <div class="card-body">
+          <h3 class="card-title">snake-game</h3>
+          <p class="card-desc">基于 pygame-ce 的经典贪吃蛇桌面游戏，深色霓虹风 UI，带粒子特效、程序合成音效与等级 / 最高分系统。</p>
+          <ul class="tags">
+            <li>Python</li>
+            <li>pygame-ce</li>
+            <li>游戏</li>
+          </ul>
+        </div>
+        <div class="card-foot">
+          <a class="btn btn-ghost" href="https://github.com/produce123/snake-game" target="_blank" rel="noopener">查看仓库 ↗</a>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-body">
+          <h3 class="card-title">claude-code-sync</h3>
+          <p class="card-desc">Claude Code 多端会话同步插件（<code>/同步</code>）：把 happy / VSCode / CLI 的历史会话无缝续接到当前对话，按内容自动归档项目。</p>
+          <ul class="tags">
+            <li>JavaScript</li>
+            <li>Claude Code 插件</li>
+          </ul>
+        </div>
+        <div class="card-foot">
+          <a class="btn btn-ghost" href="https://github.com/produce123/claude-code-sync" target="_blank" rel="noopener">查看仓库 ↗</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© <span id="year"></span> produce123 · <a href="https://github.com/produce123" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

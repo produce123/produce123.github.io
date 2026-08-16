@@ -1,0 +1,10 @@
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+
+# 本地预览缓存
+*.log
+
+# IDE
+.vscode/
+.idea/
