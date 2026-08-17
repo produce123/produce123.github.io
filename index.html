@@ -2,74 +2,90 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>produce123 · 个人主页</title>
-  <meta name="description" content="produce123 的个人主页——独立开发者，用 Claude Code 打造效率工具与创意应用。">
+  <meta name="description" content="produce123 的个人主页——用 Claude Code 打造效率工具与创意应用。">
   <link rel="icon" href="assets/avatar.png">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            neon: { cyan: '#22d3ee', green: '#4ade80', pink: '#f472b6' },
+          },
+          fontFamily: {
+            sans: ['"PingFang SC"', '"Microsoft YaHei"', '-apple-system', '"Segoe UI"', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-  <!-- Hero -->
-  <header class="hero">
-    <div class="hero-inner reveal">
-      <img class="hero-avatar" id="avatar-open" src="assets/avatar.png" alt="produce123 头像" title="点击查看完整头像" width="120" height="120">
-      <h1 class="hero-title">produce123<span class="cursor">_</span></h1>
-      <p class="hero-subtitle">开发者 · 用 Claude Code 打造效率工具与创意应用</p>
-      <nav class="hero-links">
-        <a class="btn" href="https://github.com/produce123" target="_blank" rel="noopener">
-          <svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
-          GitHub
-        </a>
-      </nav>
+<body class="dark">
+  <!-- ═══ Hamburger ═══ -->
+  <button id="menu-btn" class="fixed top-4 left-4 z-50 w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-md border border-white/10 text-gray-400 hover:text-white hover:border-cyan-400/50 transition-all duration-200 touch-manipulation" aria-label="菜单">
+    <i class="fas fa-bars text-lg"></i>
+  </button>
+
+  <!-- ═══ Theme toggle ═══ -->
+  <button id="theme-btn" class="fixed top-4 right-4 z-50 w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-md border border-white/10 text-gray-400 hover:text-white hover:border-cyan-400/50 transition-all duration-200 touch-manipulation" aria-label="切换主题">
+    <i class="fas fa-moon text-lg"></i>
+  </button>
+
+  <!-- ═══ Drawer overlay ═══ -->
+  <div id="drawer-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden transition-opacity duration-300"></div>
+
+  <!-- ═══ Drawer (slide from left) ═══ -->
+  <nav id="drawer" class="fixed top-0 left-0 h-full w-72 max-w-[80vw] z-50 transform -translate-x-full transition-transform duration-300 ease-out shadow-2xl flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center gap-3 px-6 py-6 border-b border-white/10 shrink-0">
+      <img src="assets/avatar.png" alt="avatar" class="w-11 h-11 rounded-full border-2 border-cyan-400/60 shadow-lg shadow-cyan-400/20">
+      <div>
+        <p class="font-bold text-white tracking-wide">produce123</p>
+        <p class="text-xs text-gray-400">Personal Site</p>
+      </div>
     </div>
-  </header>
-
-  <!-- 项目展示 -->
-  <main class="projects">
-    <h2 class="section-title reveal">项目展示</h2>
-    <p class="section-hint reveal">我在 GitHub 上公开的作品</p>
-
-    <div class="cards">
-      <article class="card reveal">
-        <div class="card-body">
-          <h3 class="card-title">snake-game</h3>
-          <p class="card-desc">基于 pygame-ce 的经典贪吃蛇桌面游戏，深色霓虹风 UI，带粒子特效、程序合成音效与等级 / 最高分系统。</p>
-          <ul class="tags">
-            <li>Python</li>
-            <li>pygame-ce</li>
-            <li>游戏</li>
-          </ul>
-        </div>
-        <div class="card-foot">
-          <a class="btn btn-ghost" href="https://github.com/produce123/snake-game" target="_blank" rel="noopener">查看仓库 ↗</a>
-        </div>
-      </article>
-
-      <article class="card reveal">
-        <div class="card-body">
-          <h3 class="card-title">claude-code-sync</h3>
-          <p class="card-desc">Claude Code 多端会话同步插件（<code>/同步</code>）：把 happy / VSCode / CLI 的历史会话无缝续接到当前对话，按内容自动归档项目。</p>
-          <ul class="tags">
-            <li>JavaScript</li>
-            <li>Claude Code 插件</li>
-          </ul>
-        </div>
-        <div class="card-foot">
-          <a class="btn btn-ghost" href="https://github.com/produce123/claude-code-sync" target="_blank" rel="noopener">查看仓库 ↗</a>
-        </div>
-      </article>
+    <!-- Menu items -->
+    <div class="flex-1 overflow-y-auto px-4 py-4 space-y-1">
+      <a href="#/" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-all" data-route="/">
+        <i class="fas fa-home w-5 text-center"></i><span>首页</span>
+      </a>
+      <a href="#/profile" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-all" data-route="/profile">
+        <i class="fas fa-user w-5 text-center"></i><span>个人主页</span>
+      </a>
+      <a href="#/projects" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-all" data-route="/projects">
+        <i class="fas fa-code w-5 text-center"></i><span>项目</span>
+      </a>
+      <a href="#/feed" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-all" data-route="/feed">
+        <i class="fas fa-comment-dots w-5 text-center"></i><span>说说</span>
+      </a>
+      <a href="#/music" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-all" data-route="/music">
+        <i class="fas fa-music w-5 text-center"></i><span>音乐</span>
+      </a>
     </div>
-  </main>
+    <!-- Footer -->
+    <div class="px-6 py-4 border-t border-white/10 text-center text-xs text-gray-500 shrink-0">
+      © <span id="footer-year">2026</span> produce123
+    </div>
+  </nav>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>© <span id="year"></span> produce123 · <a href="https://github.com/produce123" target="_blank" rel="noopener">GitHub</a></p>
-  </footer>
+  <!-- ═══ Main app container ═══ -->
+  <main id="app" class="min-h-screen"></main>
 
-  <!-- 头像大图 Lightbox -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="完整头像">
-    <img class="lightbox-img" src="assets/avatar.png" alt="produce123 完整头像">
-    <p class="lightbox-hint">点击任意处或按 ESC 关闭</p>
+  <!-- ═══ Lightbox ═══ -->
+  <div id="lightbox" class="fixed inset-0 z-60 bg-black/80 backdrop-blur-md hidden items-center justify-center cursor-pointer">
+    <img id="lightbox-img" class="max-w-[90vw] max-h-[90vh] rounded-2xl shadow-2xl" src="" alt="完整图片">
+    <p class="absolute bottom-10 text-gray-400 text-sm">点击任意处关闭</p>
   </div>
 
   <script src="js/main.js"></script>

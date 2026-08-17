@@ -1,268 +1,183 @@
-/* produce123.github.io — 深色霓虹主题 */
+/* ═══════════════════════════════════════
+   produce123.github.io — Custom Styles
+   ═══════════════════════════════════════ */
 
+/* --- Theme Variables --- */
 :root {
-  /* 主题变量：如需切浅色，仅改这一处 */
-  --bg: #0a0e14;
-  --bg-soft: #111722;
-  --text: #e6edf3;
-  --text-dim: #8b98a9;
-  --accent: #22d3ee;          /* 霓虹青 */
-  --accent-2: #4ade80;        /* 霓虹绿 */
-  --border: #1e2a3a;
-  --card-bg: rgba(17, 23, 34, 0.75);
-  --radius: 14px;
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --bg-primary: #030712;
+  --bg-secondary: #111827;
+  --bg-card: rgba(17, 24, 39, 0.6);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-dim: #64748b;
+  --accent: #22d3ee;
+  --accent-glow: rgba(34, 211, 238, 0.3);
+  --border: rgba(255, 255, 255, 0.08);
+  --radius: 16px;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* Light theme */
+html:not(.dark) {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-dim: #94a3b8;
+  --accent: #0891b2;
+  --accent-glow: rgba(8, 145, 178, 0.2);
+  --border: rgba(0, 0, 0, 0.06);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
 
+/* --- Base --- */
 html { scroll-behavior: smooth; }
 
+html.dark .dark\:bg-gray-950 { background-color: var(--bg-primary); }
+html.dark .dark\:bg-gray-900 { background-color: var(--bg-secondary); }
+html.dark .dark\:text-gray-100 { color: var(--text-primary); }
+
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: "PingFang SC", "Microsoft YaHei", -apple-system, "Segoe UI", sans-serif;
-  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-code {
-  background: rgba(34, 211, 238, 0.12);
-  padding: 1px 6px;
-  border-radius: 5px;
-  font-size: 0.9em;
-  color: var(--accent);
+/* --- Drawer dynamic theming --- */
+#drawer {
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
 }
+#drawer .nav-link { color: var(--text-secondary); }
+#drawer .nav-link:hover { color: var(--accent); background: rgba(255,255,255,0.03); }
+html:not(.dark) #drawer .nav-link:hover { background: rgba(0,0,0,0.03); }
 
-/* ---------- Hero ---------- */
-.hero {
-  min-height: 70vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 64px 24px 40px;
-  background:
-    radial-gradient(600px 320px at 50% -10%, rgba(34, 211, 238, 0.14), transparent 70%),
-    radial-gradient(500px 260px at 85% 110%, rgba(74, 222, 128, 0.10), transparent 70%),
-    var(--bg);
-}
+/* --- Tailwind helper overrides for non-Tailwind elements --- */
+[class*="bg-gray-"] { transition: background 0.3s ease; }
 
-.hero-inner { max-width: 720px; }
+/* --- Drawer Animation --- */
+#drawer.open { transform: translateX(0); }
+#drawer-overlay.open { opacity: 1; }
 
-.hero-avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
-  margin-bottom: 24px;
-  object-fit: cover;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.hero-avatar:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 34px rgba(34, 211, 238, 0.55);
-}
+/* --- Scrollbar --- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
 
-.hero-title {
-  font-size: clamp(2.4rem, 6vw, 3.6rem);
-  font-weight: 800;
-  letter-spacing: 0.02em;
-}
-
-.cursor {
-  color: var(--accent);
-  animation: blink 1.1s steps(1) infinite;
-}
-
-@keyframes blink { 50% { opacity: 0; } }
-
-.hero-subtitle {
-  margin-top: 12px;
-  color: var(--text-dim);
-  font-size: clamp(1rem, 2.4vw, 1.15rem);
-}
-
-.hero-links { margin-top: 28px; }
-
-/* ---------- 按钮 ---------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 22px;
-  border-radius: 999px;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  font-weight: 600;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
-.btn:hover {
-  background: rgba(34, 211, 238, 0.12);
-  box-shadow: 0 0 18px rgba(34, 211, 238, 0.35);
-  text-decoration: none;
-  transform: translateY(-1px);
-}
-.btn-ghost {
-  border-color: var(--border);
-  color: var(--text-dim);
-  padding: 7px 16px;
-  font-weight: 500;
-}
-.btn-ghost:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: rgba(34, 211, 238, 0.08);
-}
-.icon { flex-shrink: 0; }
-
-/* ---------- 项目展示 ---------- */
-.projects {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 56px 24px 72px;
-}
-
-.section-title {
-  font-size: clamp(1.6rem, 4vw, 2.1rem);
-  text-align: center;
-  font-weight: 700;
-}
-
-.section-hint {
-  text-align: center;
-  color: var(--text-dim);
-  margin-top: 6px;
-  margin-bottom: 36px;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent);
-  box-shadow: 0 12px 36px rgba(34, 211, 238, 0.18);
-}
-
-.card-body { flex: 1; }
-
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.card-title::before {
-  content: "▍";
-  color: var(--accent);
-  margin-right: 6px;
-}
-
-.card-desc {
-  margin-top: 10px;
-  color: var(--text-dim);
-  font-size: 0.95rem;
-}
-
-.tags {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.tags li {
-  font-size: 0.78rem;
-  padding: 3px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.card-foot { margin-top: 20px; }
-
-/* ---------- Footer ---------- */
-.footer {
-  border-top: 1px solid var(--border);
-  padding: 28px 24px;
-  text-align: center;
-  color: var(--text-dim);
-  font-size: 0.9rem;
-}
-
-/* ---------- 头像 Lightbox（点击查看完整头像） ---------- */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgba(4, 7, 12, 0.82);
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
-}
-.lightbox.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-.lightbox-img {
-  max-width: min(80vw, 560px);
-  max-height: 80vh;
-  border-radius: 12px;
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 44px rgba(34, 211, 238, 0.4);
-  transform: scale(0.94);
-  transition: transform 0.25s ease;
-}
-.lightbox.open .lightbox-img { transform: scale(1); }
-
-.lightbox-hint {
-  position: fixed;
-  left: 50%;
-  bottom: 28px;
-  transform: translateX(-50%);
-  color: var(--text-dim);
-  font-size: 0.85rem;
-}
-
-/* ---------- 滚动渐显 ---------- */
+/* --- Scroll Reveal --- */
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* --- Card Styles --- */
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 40px var(--accent-glow);
+}
+
+/* --- Profile Info Card --- */
+.info-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
+  padding: 1.25rem;
+  transition: border-color 0.2s ease;
+}
+.info-card:hover { border-color: var(--accent); }
+
+/* --- Feed Timeline --- */
+.feed-line {
+  position: relative;
+  padding-left: 2.5rem;
+}
+.feed-line::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 2.5rem;
+  bottom: -1rem;
+  width: 2px;
+  background: var(--border);
+}
+.feed-dot {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg-primary);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* --- Music Player --- */
+.music-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.music-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #22d3ee);
+  border-radius: 2px;
+  transition: width 0.3s linear;
+}
+.music-playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.music-playlist-item:hover { background: rgba(255,255,255,0.04); color: var(--text-primary); }
+.music-playlist-item.active { background: rgba(34, 211, 238, 0.1); color: var(--accent); }
+html:not(.dark) .music-playlist-item:hover { background: rgba(0,0,0,0.03); }
+
+/* --- Lightbox --- */
+#lightbox.open {
+  display: flex;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- Cursor blink (home page) --- */
+.cursor { animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* --- Reduced motion --- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .cursor { animation: none; }
+  #drawer { transition: none; }
+  .project-card { transition: none; }
 }
