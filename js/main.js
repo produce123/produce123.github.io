@@ -13,7 +13,6 @@ const GITHUB_REPOS = [
   { name: 'claude-code-sync', desc: 'Claude Code 多端会话同步插件（/同步）：把 happy / VSCode / CLI 的历史会话无缝续接到当前对话，按内容自动归档项目。', tags: ['JavaScript', 'Claude Code 插件'], url: 'https://github.com/produce123/claude-code-sync' },
   { name: 'vision-bridge', desc: 'MCP 视觉桥接服务（火山方舟豆包视觉模型），提供 5 个视觉工具，支持图像分析、截图诊断、文字提取、UI 转代码、图表理解。', tags: ['TypeScript', 'MCP', '视觉AI'], url: 'https://github.com/produce123/vision-bridge' },
   { name: 'produce123.github.io', desc: 'GitHub Pages 个人主页 —— 纯静态 SPA，Tailwind + 原生 JS 构建，深色/浅色双主题，哈希路由，响应式三端适配。', tags: ['HTML', 'Tailwind', 'SPA'], url: 'https://github.com/produce123/produce123.github.io' },
-  { name: 'Inkos', desc: '多智能体小说生产系统（CLI @actalk/inkos），默认中文写作，支持角色设定、大纲生成、章节续写全流程。', tags: ['TypeScript', 'AI', '写作'], url: 'https://github.com/produce123/Inkos' },
 ];
 
 const PLAYLIST = [
@@ -41,7 +40,6 @@ const PLAYLIST = [
   { title: '🐔那一天的只因，太美起来🍋', file: '🐔那一天的只因，太美起来🍋.mp3', artist: '' },
   { title: '虫儿飞', file: '“听完这首虫儿飞，就去睡觉吧。”.mp3', artist: '' },
   { title: '“那一天的IKUN唱跳起来”曼波のLemon坤', file: '“那一天的IKUN唱跳起来”曼波のLemon坤.mp3', artist: '曼波' },
-  { title: '“那一天的IKUN唱跳起来”曼波のLemon坤 - 副本', file: '“那一天的IKUN唱跳起来”曼波のLemon坤 - 副本.mp3', artist: '曼波' },
   { title: '一点点只因', file: '一点点只因.mp3', artist: '' },
   { title: '比奇堡旷世奇才《莫愁乡》', file: '比奇堡旷世奇才《莫愁乡》——“我被困在了蟹堡王里”.mp3', artist: '' },
   { title: '“太多人被困在街角” ——《莫愁乡》', file: '“太多人被困在街角 ，迟迟不见绿灯信号”——《莫愁乡》.mp3', artist: '' },
@@ -65,6 +63,13 @@ const FEED_DATA = [
     type: 'text_image',
     text: 'produce123 的个人站点正式上线 🎉\n纯静态 SPA，支持深色/浅色主题，哈希路由导航。\n用 Claude Code 开发的第 N 个玩具，欢迎来逛逛～',
     images: ['assets/avatar.png'],
+    date: '2026-08-18',
+  },
+  {
+    id: 2,
+    type: 'video',
+    text: '这是一个视频测试',
+    videoUrl: 'assets/videos/新宝岛2.0.mp4',
     date: '2026-08-18',
   },
 ];
@@ -340,8 +345,8 @@ function renderFeed() {
     ).join('');
 
     let videoHtml = '';
-    if (p.type === 'video') {
-      videoHtml = `<div class="aspect-video rounded-xl bg-gray-800 flex items-center justify-center text-gray-500 text-sm border border-white/5"><i class="fas fa-video mr-2"></i> 视频占位</div>`;
+    if (p.type === 'video' && p.videoUrl) {
+      videoHtml = `<video class="w-full rounded-xl" controls preload="metadata"><source src="${p.videoUrl}" type="video/mp4"></video>`;
     }
 
     return `
