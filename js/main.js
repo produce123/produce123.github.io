@@ -17,14 +17,46 @@ const GITHUB_REPOS = [
 ];
 
 const PLAYLIST = [
-  { title: 'Wake',      file: 'Wake.mp3',                artist: '未知' },
-  { title: '何者',       file: '何者.mp3',               artist: '未知' },
-  { title: '派蒙的千层套路', file: '派蒙的千层套路.mp3',   artist: '未知' },
-  { title: 'Deadman',    file: 'Deadman-曼波.mp3',        artist: '曼波' },
-  { title: '生命线 Lifeline', file: '生命线Lifeline.mp3',  artist: '未知' },
+  { title: 'Wake', file: 'Wake.mp3', artist: '' },
+  { title: '何者', file: '何者.mp3', artist: '' },
+  { title: '派蒙的千层套路', file: '派蒙的千层套路.mp3', artist: '' },
+  { title: 'Deadman-曼波', file: 'Deadman-曼波.mp3', artist: '曼波' },
+  { title: '生命线 Lifeline', file: '生命线Lifeline.mp3', artist: '' },
   { title: 'My Dream Girls', file: 'NACHERRY - My dream girls [qmms2].mp3', artist: 'NACHERRY' },
-  { title: '5:20 AM',    file: '5.20AM.mp3',             artist: '未知' },
-  { title: 'ぬぬぬ',       file: 'ぬぬぬ.mp3',            artist: '未知' },
+  { title: '5:20 AM', file: '5.20AM.mp3', artist: '' },
+  { title: 'ぬぬぬ', file: 'ぬぬぬ.mp3', artist: '' },
+  { title: '鸡你太美官方MV', file: '鸡你太美官方MV.mp3', artist: '' },
+  { title: 'Way Back Home', file: '鬼畜复兴悄然而至——Way Back Home.mp3', artist: '' },
+  { title: '星野的洗脑循环', file: '星野的洗脑循环.mp3', artist: '星野' },
+  { title: '曼波の2024拼好歌', file: '曼波の2024拼好歌.mp3', artist: '曼波' },
+  { title: '黄色是什么？？？', file: '黄色是什么？？？.mp3', artist: '' },
+  { title: '（文言文）终于吃上北京烤鸭了', file: '（文言文）终于吃上北京烤鸭了兄弟们！.mp3', artist: '' },
+  { title: '百家铃声', file: '百家铃声.mp3', artist: '' },
+  { title: '国歌', file: '中国人民解放军军乐团 - 中华人民共和国国歌 [qmms2].ogg', artist: '中国人民解放军军乐团' },
+  { title: '迎面走来的你让我如此蠢蠢欲动', file: '迎面走来的你让我如此蠢蠢欲动.mp3', artist: '' },
+  { title: '只因你太美', file: '只因你太美.mp3', artist: '' },
+  { title: '寂寞的人唱伤心的歌', file: '寂寞的人唱伤心的歌.mp3', artist: '' },
+  { title: '阳光彩虹小白马', file: '【花火TV】阳光彩虹小白马！.mp3', artist: '花火TV' },
+  { title: '哈基米：达拉崩吧', file: '哈基米：🐱达拉崩吧🐱.mp3', artist: '' },
+  { title: '🐔那一天的只因，太美起来🍋', file: '🐔那一天的只因，太美起来🍋.mp3', artist: '' },
+  { title: '虫儿飞', file: '“听完这首虫儿飞，就去睡觉吧。”.mp3', artist: '' },
+  { title: '“那一天的IKUN唱跳起来”曼波のLemon坤', file: '“那一天的IKUN唱跳起来”曼波のLemon坤.mp3', artist: '曼波' },
+  { title: '“那一天的IKUN唱跳起来”曼波のLemon坤 - 副本', file: '“那一天的IKUN唱跳起来”曼波のLemon坤 - 副本.mp3', artist: '曼波' },
+  { title: '一点点只因', file: '一点点只因.mp3', artist: '' },
+  { title: '比奇堡旷世奇才《莫愁乡》', file: '比奇堡旷世奇才《莫愁乡》——“我被困在了蟹堡王里”.mp3', artist: '' },
+  { title: '“太多人被困在街角” ——《莫愁乡》', file: '“太多人被困在街角 ，迟迟不见绿灯信号”——《莫愁乡》.mp3', artist: '' },
+  { title: '古典哈基米：野哈飞舞', file: '古典哈基米：野哈飞舞.mp3', artist: '' },
+  { title: '可爱女声翻唱【⚡约德尔曼波⚡】', file: '可爱女声翻唱【⚡约德尔曼波⚡】完整版.mp3', artist: '' },
+  { title: '当《菊次郎的夏天》遇上孙悟空', file: '当《菊次郎的夏天》遇上孙悟空……？？？！！！.mp3', artist: '' },
+  { title: '“那一天的高考，高考起来”', file: '“那一天的高考，高考起来”.mp3', artist: '' },
+  { title: '⚡哪个叫做正义 哪个战无不胜⚡-曼波', file: '⚡哪个叫做正义 哪个战无不胜⚡-曼波.mp3', artist: '曼波' },
+  { title: '⚡那一天的嘉祺，寂寞起来！⚡', file: '⚡那一天的嘉祺，寂寞起来！⚡.mp3', artist: '' },
+  { title: '【神的说唱】“coke往我亦可往”', file: '【神的说唱】“coke往我亦可往”.mp3', artist: '' },
+  { title: '【粤语版】萌虎来也！食通万物 修心修身', file: '【粤语版】萌虎来也！食通万物 修心修身.mp3', artist: '' },
+  { title: '【全棉时代】', file: '【全棉时代】.mp3', artist: '' },
+  { title: '哈基档案', file: '哈基档案.mp3', artist: '' },
+  { title: '“终于知道为什么听到某些歌，反派会愣住了”', file: '“终于知道为什么听到某些歌，反派会愣住了。因为...这也是他们的童年啊...”.mp3', artist: '' },
+  { title: '蒋介石', file: '蒋介石-2026-08-13-22-23-爸爸.mp3', artist: '' },
 ];
 
 const FEED_DATA = [
@@ -78,13 +110,16 @@ const Drawer = {
     document.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', close));
   },
   toggle() {
-    const open = this.el?.classList.toggle('open');
+    const open = !this.el?.classList.contains('open');
+    this.el?.classList.toggle('open', open);
+    this.overlay?.classList.toggle('hidden', !open);
     this.overlay?.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
   },
   close() {
     this.el?.classList.remove('open');
     this.overlay?.classList.remove('open');
+    this.overlay?.classList.add('hidden');
     document.body.style.overflow = '';
   },
 };
@@ -108,8 +143,21 @@ function closeLightbox() {
   lb.classList.remove('open');
   document.body.style.overflow = '';
 }
+// Close lightbox by clicking the container background (not the image)
+document.addEventListener('click', (e) => {
+  const lb = document.getElementById('lightbox');
+  if (!lb || !lb.classList.contains('open')) return;
+  if (e.target === lb || e.target.id === 'lightbox') {
+    closeLightbox();
+  }
+});
 // Allow escape to close
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+// Prevent image click from closing
+document.addEventListener('DOMContentLoaded', () => {
+  const img = document.getElementById('lightbox-img');
+  if (img) img.addEventListener('click', (e) => e.stopPropagation());
+}, { once: true });
 
 
 /* ==============================================
