@@ -71,6 +71,7 @@ const FEED_DATA = [
     text: '这是一个视频测试',
     videoUrl: 'assets/videos/新宝岛2.0.mp4',
     date: '2026-08-18',
+    time: '13:30',
   },
 ];
 
@@ -202,12 +203,13 @@ function navigate(route) {
 }
 
 function renderPage(route) {
+  if (route !== '/music') MusicPlayer.destroy();
   switch (route) {
     case '/':       $app.innerHTML = renderHome();      break;
     case '/profile': $app.innerHTML = renderProfile();  break;
     case '/projects': $app.innerHTML = renderProjects(); break;
     case '/feed':    $app.innerHTML = renderFeed();     break;
-    case '/music':   $app.innerHTML = renderMusic();    break;
+    case '/music':   $app.innerHTML = renderMusic();    requestAnimationFrame(() => MusicPlayer.init()); break;
     default:         $app.innerHTML = renderHome();     window.location.hash = '#/'; break;
   }
   observeReveal();
@@ -270,7 +272,7 @@ function renderProfile() {
       ${profileCard('fa-gear', '专业', '机械电子工程')}
       ${profileCard('fa-quote-right', '个性签名', 'Worlds Yield Primacy')}
       ${profileCard('fa-wand-magic-sparkles', '技能描述', '无，但是 Claude Code 帮我打造效率工具')}
-      ${profileCard('fa-tv', 'B站 UID', '3546916338010193')}
+      ${profileCard('fa-tv', 'B站 UID', 'uid 3546916338010193', 'https://space.bilibili.com/3546916338010193')}
       ${profileCard('fa-envelope', '联系邮箱', 'p2128887242@outlook.com')}
     </div>
 
@@ -283,16 +285,18 @@ function renderProfile() {
   </section>`;
 }
 
-function profileCard(icon, label, value) {
+function profileCard(icon, label, value, linkUrl) {
+  const link = linkUrl ? `<a href="${linkUrl}" target="_blank" rel="noopener" class="ml-auto shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-400 hover:bg-cyan-400/20 hover:text-white transition-colors"><i class="fas fa-arrow-up-right-from-square text-xs"></i></a>` : '';
   return `
   <div class="info-card flex items-center gap-4 p-4 reveal">
     <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-400 shrink-0">
       <i class="fas ${icon}"></i>
     </div>
-    <div class="min-w-0">
+    <div class="min-w-0 flex-1">
       <p class="text-xs text-gray-500 uppercase tracking-wider">${label}</p>
       <p class="text-sm font-medium truncate">${value}</p>
     </div>
+    ${link}
   </div>`;
 }
 
@@ -339,7 +343,11 @@ function renderProjects() {
 
 /* ---------- Feed ---------- */
 function renderFeed() {
-  const posts = FEED_DATA.map(p => {
+  const sorted = [...FEED_DATA].sort((a, b) => {
+    const cmp = a.date.localeCompare(b.date);
+    return feedOrder === 'desc' ? -cmp : cmp;
+  });
+  const posts = sorted.map(p => {
     const imgs = (p.images || []).map(src =>
       `<img src="${src}" alt="配图" class="rounded-xl max-h-64 w-full object-cover cursor-pointer hover:opacity-90 transition-opacity" onclick="openLightbox('${src}')">`
     ).join('');
@@ -357,7 +365,7 @@ function renderFeed() {
           <img src="assets/avatar.png" alt="头像" class="w-9 h-9 rounded-full border border-cyan-400/40">
           <div>
             <p class="font-semibold text-sm">produce123</p>
-            <p class="text-xs text-gray-500">${p.date}</p>
+            <p class="text-xs text-gray-500">${p.date}${p.time ? " " + p.time : ""}</p>
           </div>
         </div>
         <p class="text-sm text-gray-300 whitespace-pre-line leading-relaxed">${p.text}</p>
@@ -369,9 +377,15 @@ function renderFeed() {
 
   return `
   <section class="px-4 sm:px-6 py-24 max-w-2xl mx-auto">
-    <div class="text-center mb-10 reveal">
-      <h2 class="text-3xl font-bold">说说</h2>
-      <p class="text-gray-400 mt-2">碎碎念 / 动态</p>
+    <div class="flex items-center justify-between mb-6 reveal">
+      <div>
+        <h2 class="text-3xl font-bold">说说</h2>
+        <p class="text-gray-400 mt-1">碎碎念 / 动态</p>
+      </div>
+      <button onclick="toggleFeedSort()" class="flex items-center gap-1.5 text-xs text-gray-400 hover:text-cyan-400 transition-colors px-3 py-1.5 rounded-lg bg-white/5">
+        <i id="feed-sort-icon" class="fas ${feedOrder === 'desc' ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}"></i>
+        <span id="feed-sort-text">${feedOrder === 'desc' ? '最新优先' : '最早优先'}</span>
+      </button>
     </div>
     <div class="relative">
       ${posts || '<p class="text-center text-gray-500 py-12">暂无动态，敬请期待～</p>'}
@@ -418,6 +432,12 @@ function renderMusic() {
           <i class="fas fa-step-forward"></i>
         </button>
       </div>
+      <!-- Play modes -->
+      <div class="flex items-center justify-center gap-2 mt-4">
+        <button class="play-mode-btn active" data-mode="sequential" title="顺序播放"><i class="fas fa-list"></i></button>
+        <button class="play-mode-btn" data-mode="repeat-one" title="单曲循环"><i class="fas fa-repeat"></i></button>
+        <button class="play-mode-btn" data-mode="shuffle" title="随机播放"><i class="fas fa-shuffle"></i></button>
+      </div>
     </div>
 
     <!-- Playlist -->
@@ -441,18 +461,69 @@ function renderMusic() {
    MUSIC PLAYER ENGINE
    ============================================== */
 
+let playMode = 'sequential';
+let feedOrder = 'desc';
+
 const MusicPlayer = {
   audio: null,
   currentIndex: -1,
   isPlaying: false,
+  playMode: 'sequential',
+
+  destroy() {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.src = '';
+      this.audio.load();
+    }
+    this.audio = null;
+    this.currentIndex = -1;
+    this.isPlaying = false;
+  },
+
+  getRandomIndex() {
+    let idx;
+    do { idx = Math.floor(Math.random() * PLAYLIST.length); }
+    while (idx === this.currentIndex && PLAYLIST.length > 1);
+    return idx;
+  },
+  playMode: 'sequential',
+
+  destroy() {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.src = '';
+      this.audio.load();
+    }
+    this.audio = null;
+    this.currentIndex = -1;
+    this.isPlaying = false;
+  },
+
+  getRandomIndex() {
+    let idx;
+    do { idx = Math.floor(Math.random() * PLAYLIST.length); }
+    while (idx === this.currentIndex && PLAYLIST.length > 1);
+    return idx;
+  },
 
   init() {
+    this.destroy();
     this.audio = new Audio();
     this.audio.preload = 'metadata';
 
     this.audio.addEventListener('timeupdate', () => this.updateProgress());
     this.audio.addEventListener('loadedmetadata', () => this.updateDuration());
-    this.audio.addEventListener('ended', () => this.next());
+    this.audio.addEventListener('ended', () => {
+      if (this.playMode === 'repeat-one') {
+        this.audio.currentTime = 0;
+        this.audio.play();
+      } else if (this.playMode === 'shuffle') {
+        this.play(this.getRandomIndex());
+      } else {
+        this.next();
+      }
+    });
     this.audio.addEventListener('error', () => {
       this.setTitle('加载失败');
       this.setPlaying(false);
@@ -473,15 +544,29 @@ const MusicPlayer = {
         if (!isNaN(idx)) this.play(idx);
       });
     });
+    // Play mode buttons
+    document.querySelectorAll('.play-mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.playMode = btn.dataset.mode;
+        document.querySelectorAll('.play-mode-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
 
-    // Load durations
+    // Load durations with fallback for non-Chrome browsers
     PLAYLIST.forEach((s, i) => {
       const tmp = new Audio(`assets/music/${encodeURIComponent(s.file)}`);
       tmp.preload = 'metadata';
+      const timeoutId = setTimeout(() => {
+        const dur = Array.from(document.querySelectorAll('.music-duration')).find(el => el.dataset.file === s.file);
+        if (dur && dur.textContent === '—') dur.textContent = '?';
+      }, 3000);
       tmp.addEventListener('loadedmetadata', () => {
-        const dur = document.querySelector(`.music-duration[data-file="${CSS.escape(s.file)}"]`);
-        if (dur) dur.textContent = this.formatTime(tmp.duration);
+        clearTimeout(timeoutId);
+        const dur = Array.from(document.querySelectorAll('.music-duration')).find(el => el.dataset.file === s.file);
+        if (dur) dur.textContent = __fmtTime(tmp.duration);
       }, { once: true });
+      tmp.addEventListener('error', () => clearTimeout(timeoutId), { once: true });
     });
 
     // Auto-play first
@@ -521,7 +606,11 @@ const MusicPlayer = {
   },
 
   next() {
-    this.play((this.currentIndex + 1) % PLAYLIST.length);
+    if (this.playMode === 'shuffle') {
+      this.play(this.getRandomIndex());
+    } else {
+      this.play((this.currentIndex + 1) % PLAYLIST.length);
+    }
   },
 
   seek(e) {
@@ -585,14 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (year) year.textContent = new Date().getFullYear();
 
   // Init music player after music page renders
-  const origRender = renderPage;
-  renderPage = function(route) {
-    origRender(route);
-    if (route === '/music') {
-      // Small delay for DOM to settle
-      requestAnimationFrame(() => MusicPlayer.init());
-    }
-  };
+
 
   // Handle initial route
   navigate();
