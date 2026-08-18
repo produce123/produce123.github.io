@@ -181,11 +181,23 @@ html:not(.dark) .music-playlist-item:hover { background: rgba(0,0,0,0.03); }
   #drawer { transition: none; }
   .project-card { transition: none; }
 }
-/* --- Progress Bar Dot --- */
-.music-bar { position: relative; height: 4px; cursor: pointer; transition: height 0.15s ease; }
-.music-bar:hover { height: 8px; }
-.music-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #22d3ee); border-radius: 3px; position: relative; }
-.music-bar:hover .music-bar-fill::after {
+/* --- Progress Bar Dot (always visible) --- */
+.music-bar {
+  position: relative;
+  height: 6px;
+  cursor: pointer;
+  transition: height 0.15s ease;
+}
+.music-bar:hover { height: 10px; }
+.music-bar:active { height: 10px; }
+.music-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #22d3ee);
+  border-radius: 3px;
+  position: relative;
+  transition: width 0.3s linear;
+}
+.music-bar-fill::after {
   content: '';
   position: absolute;
   right: -6px;
@@ -196,6 +208,13 @@ html:not(.dark) .music-playlist-item:hover { background: rgba(0,0,0,0.03); }
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 8px var(--accent-glow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.music-bar:hover .music-bar-fill::after {
+  width: 16px;
+  height: 16px;
+  right: -8px;
+  box-shadow: 0 0 14px var(--accent-glow);
 }
 
 /* --- Play Mode Buttons --- */

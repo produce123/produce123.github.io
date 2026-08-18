@@ -56,3 +56,9 @@ git add -A && git commit -m "update" && git push origin main
 - **音乐列表**：把 MP3 放入 `assets/music/`，然后在 `PLAYLIST` 数组添加对应条目。
 - 颜色 / 主题变量集中在 `css/style.css` 的 `:root`，改主题只动一处。
 - 保持纯静态：不引入框架 / 构建工具，除非有明确理由。
+
+## 更新历史
+
+| 版本 | 日期 | 说明 |
+|------|------|------|
+| v2.1 | 2026-08-18 | 修复说说排序（时间字段补齐+排序函数）、音乐时长显示（`__fmtTime`→`MusicPlayer.formatTime`+预加载对象释放）、进度条拖动与定位圆点；无重复代码清理；README/CLAUDE.md 同步更新规则纳入 |

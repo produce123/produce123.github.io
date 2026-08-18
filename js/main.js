@@ -64,6 +64,7 @@ const FEED_DATA = [
     text: 'produce123 的个人站点正式上线 🎉\n纯静态 SPA，支持深色/浅色主题，哈希路由导航。\n用 Claude Code 开发的第 N 个玩具，欢迎来逛逛～',
     images: ['assets/avatar.png'],
     date: '2026-08-18',
+    time: '00:00',
   },
   {
     id: 2,
@@ -344,7 +345,8 @@ function renderProjects() {
 /* ---------- Feed ---------- */
 function renderFeed() {
   const sorted = [...FEED_DATA].sort((a, b) => {
-    const cmp = a.date.localeCompare(b.date);
+    const getTime = p => `${p.date}T${p.time || '00:00'}`;
+    const cmp = getTime(a).localeCompare(getTime(b));
     return feedOrder === 'desc' ? -cmp : cmp;
   });
   const posts = sorted.map(p => {
@@ -461,51 +463,22 @@ function renderMusic() {
    MUSIC PLAYER ENGINE
    ============================================== */
 
-let playMode = 'sequential';
 let feedOrder = 'desc';
+
+function toggleFeedSort() {
+  feedOrder = feedOrder === 'desc' ? 'asc' : 'desc';
+  const icon = document.getElementById('feed-sort-icon');
+  const text = document.getElementById('feed-sort-text');
+  if (icon) icon.className = `fas ${feedOrder === 'desc' ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}`;
+  if (text) text.textContent = feedOrder === 'desc' ? '最新优先' : '最早优先';
+  renderPage(window.location.hash.slice(1) || '/');
+}
 
 const MusicPlayer = {
   audio: null,
   currentIndex: -1,
   isPlaying: false,
   playMode: 'sequential',
-
-  destroy() {
-    if (this.audio) {
-      this.audio.pause();
-      this.audio.src = '';
-      this.audio.load();
-    }
-    this.audio = null;
-    this.currentIndex = -1;
-    this.isPlaying = false;
-  },
-
-  getRandomIndex() {
-    let idx;
-    do { idx = Math.floor(Math.random() * PLAYLIST.length); }
-    while (idx === this.currentIndex && PLAYLIST.length > 1);
-    return idx;
-  },
-  playMode: 'sequential',
-
-  destroy() {
-    if (this.audio) {
-      this.audio.pause();
-      this.audio.src = '';
-      this.audio.load();
-    }
-    this.audio = null;
-    this.currentIndex = -1;
-    this.isPlaying = false;
-  },
-
-  getRandomIndex() {
-    let idx;
-    do { idx = Math.floor(Math.random() * PLAYLIST.length); }
-    while (idx === this.currentIndex && PLAYLIST.length > 1);
-    return idx;
-  },
 
   init() {
     this.destroy();
@@ -534,8 +507,7 @@ const MusicPlayer = {
     document.getElementById('prev-btn')?.addEventListener('click', () => this.prev());
     document.getElementById('next-btn')?.addEventListener('click', () => this.next());
 
-    const bar = document.getElementById('progress-bar');
-    bar?.addEventListener('click', (e) => this.seek(e));
+    this._setupProgressDrag();
 
     // Playlist item clicks
     document.querySelectorAll('.music-playlist-item').forEach(el => {
@@ -553,20 +525,21 @@ const MusicPlayer = {
       });
     });
 
-    // Load durations with fallback for non-Chrome browsers
+    // Load durations — cache DOM nodes once, clean up temp Audio objects
+    const durSpans = document.querySelectorAll('.music-duration');
     PLAYLIST.forEach((s, i) => {
       const tmp = new Audio(`assets/music/${encodeURIComponent(s.file)}`);
       tmp.preload = 'metadata';
+      const durSpan = durSpans[i];
       const timeoutId = setTimeout(() => {
-        const dur = Array.from(document.querySelectorAll('.music-duration')).find(el => el.dataset.file === s.file);
-        if (dur && dur.textContent === '—') dur.textContent = '?';
-      }, 3000);
+        if (durSpan && durSpan.textContent === '—') durSpan.textContent = '?';
+      }, 5000);
       tmp.addEventListener('loadedmetadata', () => {
         clearTimeout(timeoutId);
-        const dur = Array.from(document.querySelectorAll('.music-duration')).find(el => el.dataset.file === s.file);
-        if (dur) dur.textContent = __fmtTime(tmp.duration);
+        if (durSpan) durSpan.textContent = MusicPlayer.formatTime(tmp.duration);
+        tmp.src = ''; // release
       }, { once: true });
-      tmp.addEventListener('error', () => clearTimeout(timeoutId), { once: true });
+      tmp.addEventListener('error', () => { clearTimeout(timeoutId); tmp.src = ''; }, { once: true });
     });
 
     // Auto-play first
@@ -611,6 +584,56 @@ const MusicPlayer = {
     } else {
       this.play((this.currentIndex + 1) % PLAYLIST.length);
     }
+  },
+
+  _setupProgressDrag() {
+    const bar = document.getElementById('progress-bar');
+    if (!bar) return;
+    const fill = document.getElementById('progress-fill');
+
+    const calc = (clientX) => {
+      const rect = bar.getBoundingClientRect();
+      return Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    };
+
+    const onMove = (e) => {
+      const cx = e.touches ? e.touches[0].clientX : e.clientX;
+      const pct = calc(cx);
+      if (fill) fill.style.width = `${pct * 100}%`;
+    };
+
+    const onEnd = (e) => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onEnd);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onEnd);
+      // Restore transition on fill
+      if (fill) fill.style.transition = '';
+
+      const cx = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+      if (this.audio && this.audio.duration) {
+        this.audio.currentTime = calc(cx) * this.audio.duration;
+      }
+    };
+
+    // Click
+    bar.addEventListener('click', (e) => this.seek(e));
+
+    // Drag start (mouse)
+    bar.addEventListener('mousedown', (e) => {
+      if (fill) fill.style.transition = 'none';
+      onMove(e);
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onEnd);
+    });
+
+    // Drag start (touch)
+    bar.addEventListener('touchstart', (e) => {
+      if (fill) fill.style.transition = 'none';
+      onMove(e);
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onEnd);
+    }, { passive: true });
   },
 
   seek(e) {
