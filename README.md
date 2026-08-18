@@ -62,4 +62,4 @@ git add -A && git commit -m "update" && git push origin main
 | 版本 | 日期 | 说明 |
 |------|------|------|
 | v2.1 | 2026-08-18 | 修复说说排序（时间字段补齐+排序函数）、音乐时长显示（`__fmtTime`→`MusicPlayer.formatTime`+预加载对象释放）、进度条拖动与定位圆点；无重复代码清理；README/CLAUDE.md 同步更新规则纳入 |
-| v2.2 | 2026-08-18 | **紧急修复：** v2.1 误删 `destroy()`/`getRandomIndex()` 导致首页空白、音乐页崩溃；CSS 重复规则合并、进度条圆点 overflow:hidden 裁切修复；favicon 440KB PNG → 内嵌 SVG；全面代码审计与优化 |
+| v2.2 | 2026-08-18 | **紧急修复：** v2.1 误删 `destroy()`/`getRandomIndex()` 导致首页空白、音乐页崩溃；CSS 重复规则合并、进度条圆点裁切修复；favicon 440KB→8.5KB 压缩版头像；全面代码审计与优化 |
