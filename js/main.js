@@ -480,6 +480,24 @@ const MusicPlayer = {
   isPlaying: false,
   playMode: 'sequential',
 
+  destroy() {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.src = '';
+      this.audio.load();
+    }
+    this.audio = null;
+    this.currentIndex = -1;
+    this.isPlaying = false;
+  },
+
+  getRandomIndex() {
+    let idx;
+    do { idx = Math.floor(Math.random() * PLAYLIST.length); }
+    while (idx === this.currentIndex && PLAYLIST.length > 1);
+    return idx;
+  },
+
   init() {
     this.destroy();
     this.audio = new Audio();
