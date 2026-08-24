@@ -10,7 +10,7 @@
 
 const GITHUB_REPOS = [
   { name: 'snake-game', desc: '基于 pygame-ce 的经典贪吃蛇桌面游戏，深色霓虹风 UI，带粒子特效、程序合成音效与等级/最高分系统。', tags: ['Python', 'pygame-ce', '游戏'], url: 'https://github.com/produce123/snake-game' },
-  { name: 'claude-code-sync', desc: 'Claude Code 多端会话同步插件（/同步）：把 happy / VSCode / CLI 的历史会话无缝续接到当前对话，按内容自动归档项目。', tags: ['JavaScript', 'Claude Code 插件'], url: 'https://github.com/produce123/claude-code-sync' },
+  { name: 'claude-code-sync', desc: 'AI Agent 多端会话同步插件（/同步）：把 happy / VSCode / CLI 的历史会话无缝续接到当前对话，按内容自动归档项目。', tags: ['JavaScript', 'AI Agent 插件'], url: 'https://github.com/produce123/claude-code-sync' },
   { name: 'vision-bridge', desc: 'MCP 视觉桥接服务（火山方舟豆包视觉模型），提供 5 个视觉工具，支持图像分析、截图诊断、文字提取、UI 转代码、图表理解。', tags: ['TypeScript', 'MCP', '视觉AI'], url: 'https://github.com/produce123/vision-bridge' },
   { name: 'produce123.github.io', desc: 'GitHub Pages 个人主页 —— 纯静态 SPA，Tailwind + 原生 JS 构建，深色/浅色双主题，哈希路由，响应式三端适配。', tags: ['HTML', 'Tailwind', 'SPA'], url: 'https://github.com/produce123/produce123.github.io' },
 ];
@@ -61,7 +61,7 @@ const FEED_DATA = [
   {
     id: 1,
     type: 'text_image',
-    text: 'produce123 的个人站点正式上线 🎉\n纯静态 SPA，支持深色/浅色主题，哈希路由导航。\n用 Claude Code 开发的第 N 个玩具，欢迎来逛逛～',
+    text: 'produce123 的个人站点正式上线 🎉\n纯静态 SPA，支持深色/浅色主题，哈希路由导航。\n用 AI Agent 开发的第 N 个玩具，欢迎来逛逛～',
     images: ['assets/avatar.png'],
     date: '2026-08-18',
     time: '00:00',
@@ -234,7 +234,7 @@ function renderHome() {
         produce123<span class="text-cyan-400 cursor">_</span>
       </h1>
       <p class="text-base sm:text-lg text-gray-400 max-w-md mx-auto leading-relaxed">
-        开发者 · 用 Claude Code 打造效率工具与创意应用
+        开发者 · 用 AI Agent 打造效率工具与创意应用
       </p>
       <div class="mt-8 flex justify-center gap-4">
         <a href="https://github.com/produce123" target="_blank" rel="noopener"
@@ -272,7 +272,7 @@ function renderProfile() {
       ${profileCard('fa-graduation-cap', '就读大学', '南通大学')}
       ${profileCard('fa-gear', '专业', '机械电子工程')}
       ${profileCard('fa-quote-right', '个性签名', 'Worlds Yield Primacy')}
-      ${profileCard('fa-wand-magic-sparkles', '技能描述', '无，但是 Claude Code 帮我打造效率工具')}
+      ${profileCard('fa-wand-magic-sparkles', '技能描述', '无，但是 AI Agent 帮我打造效率工具')}
       ${profileCard('fa-tv', 'B站 UID', 'uid 3546916338010193', 'https://space.bilibili.com/3546916338010193')}
       ${profileCard('fa-envelope', '联系邮箱', 'p2128887242@outlook.com')}
     </div>

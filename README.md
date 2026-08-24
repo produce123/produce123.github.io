@@ -14,8 +14,7 @@
 ├── assets/
 │   ├── avatar.png       # 头像
 │   └── music/           # 音乐文件（手动添加）
-├── README.md
-└── .claude/CLAUDE.md    # 项目专属开发约定
+└── README.md
 ```
 
 ## 页面路由（哈希路由，#/xxx）
@@ -47,7 +46,7 @@ git add -A && git commit -m "update" && git push origin main
 
 站点地址：<https://home.prodhub.me>　|　兜底：<https://produce123.github.io>
 
-> 自定义域名 `home.prodhub.me`：DNS 走 Cloudflare **仅 DNS（灰云）** CNAME 到 `produce123.github.io`，证书由 GitHub 自动签发续期，Enforce HTTPS 已开启。详见 `.claude/CLAUDE.md`。
+> 自定义域名 `home.prodhub.me`：DNS 走 Cloudflare **仅 DNS（灰云）** CNAME 到 `produce123.github.io`，证书由 GitHub 自动签发续期，Enforce HTTPS 已开启。
 
 ## 维护约定
 
