@@ -12,6 +12,8 @@ const GITHUB_REPOS = [
   { name: 'snake-game', desc: '基于 pygame-ce 的经典贪吃蛇桌面游戏，深色霓虹风 UI，带粒子特效、程序合成音效与等级/最高分系统。', tags: ['Python', 'pygame-ce', '游戏'], url: 'https://github.com/produce123/snake-game' },
   { name: 'claude-code-sync', desc: 'AI Agent 多端会话同步插件（/同步）：把 happy / VSCode / CLI 的历史会话无缝续接到当前对话，按内容自动归档项目。', tags: ['JavaScript', 'AI Agent 插件'], url: 'https://github.com/produce123/claude-code-sync' },
   { name: 'vision-bridge', desc: 'MCP 视觉桥接服务（火山方舟豆包视觉模型），提供 5 个视觉工具，支持图像分析、截图诊断、文字提取、UI 转代码、图表理解。', tags: ['TypeScript', 'MCP', '视觉AI'], url: 'https://github.com/produce123/vision-bridge' },
+  { name: 'Cannon-Goblin', desc: '大炮轰小鬼 —— 不对称策略棋盘游戏，零依赖零构建的纯静态页面。联机走 WebRTC 点对点直连（打不通自动降级 MQTT 中转），6 位房间号进房；含三档 alpha-beta AI 与地图编辑器。', tags: ['JavaScript', 'WebRTC', '游戏'], url: 'https://github.com/produce123/Cannon-Goblin' },
+  { name: 'web-games', desc: '网页游戏导航页 —— 把分散在各游戏仓库的网页汇总成一个入口，卡片化列表 + 搜索，加游戏只需往 games.js 加一条数据。', tags: ['HTML', '导航站', '游戏'], url: 'https://github.com/produce123/web-games' },
   { name: 'produce123.github.io', desc: 'GitHub Pages 个人主页 —— 纯静态 SPA，Tailwind + 原生 JS 构建，深色/浅色双主题，哈希路由，响应式三端适配。', tags: ['HTML', 'Tailwind', 'SPA'], url: 'https://github.com/produce123/produce123.github.io' },
 ];
 
